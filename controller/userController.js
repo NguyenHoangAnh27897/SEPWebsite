@@ -90,7 +90,7 @@ module.exports = (app) => {
             res.render('Page/Product/Add', {
                 title: 'Thêm sản phẩm',
                 chuto: 'Kênh người bán',
-                products: docs ,
+                products: docs,
                 type: types
             });
         });
