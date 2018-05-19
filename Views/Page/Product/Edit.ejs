@@ -1,0 +1,337 @@
+<!-- meta css info  -->
+<%- include ../../partials(css-js)/head %>
+
+<%- include ../../partials/Header %>
+<hr>
+<h1 class="text-center"><%= chuto %></h1>
+<div class="container" style="margin-bottom: 25px;box-shadow: 1px 1px 1px;">
+  <div class="wapper">
+    <br>
+    <div class="form__upload--image text-dark">
+      <h2>Đổi hình ảnh sản phẩm</h2>
+      <p>
+        Kéo để sắp xếp lại hình ảnh của bạn. Mỗi sản phẩm có <b><i class="text-primary">tối đa 6 hình ảnh</i></b>.
+      </p>
+      <div id="alert--err" class="alert alert-danger" style="display: none;">
+        <strong>Lỗi!</strong> Vui lòng chỉ chọn đúng định dạng ảnh&nbsp;<i class="text-primary">( .JPG |.JPEG |.PNG |.GIF )</i>.
+      </div>
+        <%if(typeof msg != 'undefined'){ %>
+          <div id="alert--err" class="alert alert-danger">
+            <strong><%= msg %></strong>
+          </div>
+        <% } %>
+        <form action="/update-san-pham/<%= products._id %>" method="post" enctype="multipart/form-data">
+
+          <div class="dropzone">
+            <div class="dz-default dz-message">
+              <div id="dropE" style="display: none;">
+                <svg viewBox="0 0 1000 1000">
+                  <g><g transform="translate(0.000000,511.000000) scale(0.100000,-0.100000)">
+                    <path d="M5754.6,3701.3c-652.2-117.7-1245.6-487.9-1620.7-1010.2l-93.2-127.5h-186.3c-367.8-2.5-742.9-105.4-1039.6-284.4C2537.7,2110,2233.7,1781.4,2089,1497l-49-98.1l-220.7-31.9C961.1,1251.8,296.7,624.1,132.4-226.7c-174.1-912.1,370.2-1865.9,1245.6-2182.2c333.5-120.2,446.3-127.5,1892.9-127.5h1338.7v196.2v196.2H3256.1c-1530,0-1559.4,2.4-1907.6,174.1c-512.4,252.5-858.2,816.5-858.2,1395.2c0,875.3,765,1613.4,1618.3,1564.3l193.7-12.3l51.5,149.6c259.9,718.4,1012.6,1159.8,1743.3,1020c115.2-22.1,134.9-19.6,156.9,14.7c483,819,1184.3,1223.5,2035.1,1179.4c946.4-49,1716.3-674.3,1978.7-1603.6c39.2-147.1,53.9-262.4,53.9-490.4l2.4-301.6l154.5-51.5c203.5-68.6,485.5-259.9,642.4-434c237.8-267.3,392.3-671.8,392.3-1034.7c0-581.1-345.7-1140.1-858.2-1395.2c-348.2-171.6-377.6-174.1-1905.1-174.1H5394.2v-196.2v-196.2h1355.9c1029.8,2.4,1397.6,9.8,1537.4,34.3c845.9,154.5,1490.8,836.1,1598.7,1696.7c51.5,407-41.7,860.6-252.5,1218.6c-171.6,291.8-500.2,598.3-796.9,747.8l-100.5,51.5l-17.2,179c-46.6,456-196.2,887.6-438.9,1245.6c-110.3,161.8-448.7,505.1-617.9,625.2C7117.9,3649.8,6392.1,3816.5,5754.6,3701.3z"/><path d="M4290.8-219.3L3592-918.1l142.2-139.8l139.8-142.2l465.9,465.9l465.9,465.9V-1894v-1623.2h196.2H5198V-1894v1625.6l465.9-465.9l465.9-465.9l139.8,142.2l142.2,139.8l-698.8,698.8c-385,384.9-703.7,698.8-711.1,698.8C4994.5,479.5,4675.8,165.6,4290.8-219.3z"/></g></g>
+                </svg>
+                <span>
+              <button class="btn btn-success" type="button" name="button">Tìm hình ảnh
+              </button>&nbsp;<i class="lead text-dark">hoặc kéo & thả hình ảnh lên</i>
+            </span>
+                <ul class="text-left">
+                  <li>Tối đa 6 hình ảnh, tối đa 2.0 MB mỗi hình ảnh.</li>
+                  <li>Định dạng hình ảnh chấp nhận: JPG, JPEG, PNG, GIF.</li>
+                  <li>Kích cỡ đề xuất: 1024 x 1024 px.</li>
+                </ul>
+              </div>
+              <input type="file" id="files" onchange="uploadImages()" accept="image/*" name="product__img" multiple />
+              <output id="list">
+
+                <%var chuoiImg = products.Img_Product.split(",");%>
+                <% if(chuoiImg.length == 1) {%>
+                  <div class="img-relative" title="<%= chuoiImg.toString() %>" style="Background: url('../images/<%= chuoiImg.toString() %>') center center / contain no-repeat;">
+                    <svg class="deleteSvg" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" width="16px" height="16px" fill="#01a185" cursor="pointer" stroke="none"><g><path d="M967,182.7H33c-12.7,0-23-10.3-23-23c0-12.7,10.3-23,23-23H967c12.7,0,23,10.3,23,23C990,172.4,979.7,182.7,967,182.7z"></path><path d="M744.6,981.6H249.1c-54.8,0-99.3-44.5-99.3-99.3V159.7c0-12.7,10.3-23,23-23c12.7,0,23,10.3,23,23v722.6c0,29.4,23.8,53.3,53.2,53.3h495.5c29.3,0,53.2-23.9,53.2-53.3V235.9c0-12.7,10.3-23.1,23-23.1c12.7,0,23,10.3,23,23.1v646.4C843.9,937.1,799.3,981.6,744.6,981.6z"></path><path d="M700.2,182.7c-0.3,0-0.6,0-0.9,0H296.7c-8.4,0-16.2-4.6-20.2-12c-4-7.4-3.7-16.4,0.8-23.5l76.2-118.3c4.3-6.6,11.5-10.6,19.4-10.6h254.9c8.1,0,15.6,4.2,19.8,11.1l68.6,113.6c4.4,4.2,7.1,10.1,7.1,16.6C723.3,172.4,713,182.7,700.2,182.7z M339,136.7h319.6l-43.6-72.3H385.5L339,136.7z"></path><path d="M322.9,862.5c-12.7,0-23.1-10.3-23.1-23.1V286.7c0-12.7,10.4-23.1,23.1-23.1c12.7,0,23,10.3,23,23.1v552.7C346,852.2,335.7,862.5,322.9,862.5z"></path><path d="M500,862.5c-12.7,0-23-10.3-23-23.1V286.7c0-12.7,10.3-23.1,23-23.1s23.1,10.3,23.1,23.1v552.7C523.1,852.2,512.7,862.5,500,862.5z"></path><path d="M666,862.5c-12.7,0-23-10.3-23-23.1V286.7c0-12.7,10.3-23.1,23-23.1c12.7,0,23,10.3,23,23.1v552.7C689,852.2,678.7,862.5,666,862.5z"></path></g></svg>
+                  </div>
+                <%} else {%>
+                  <% chuoiImg.forEach(function(lala){%>
+                    <div class="img-relative" title="<%= lala %>" style="Background: url('../images/<%= lala %>') center center / contain no-repeat;">
+                      <svg class="deleteSvg" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" width="16px" height="16px" fill="#01a185" cursor="pointer" stroke="none"><g><path d="M967,182.7H33c-12.7,0-23-10.3-23-23c0-12.7,10.3-23,23-23H967c12.7,0,23,10.3,23,23C990,172.4,979.7,182.7,967,182.7z"></path><path d="M744.6,981.6H249.1c-54.8,0-99.3-44.5-99.3-99.3V159.7c0-12.7,10.3-23,23-23c12.7,0,23,10.3,23,23v722.6c0,29.4,23.8,53.3,53.2,53.3h495.5c29.3,0,53.2-23.9,53.2-53.3V235.9c0-12.7,10.3-23.1,23-23.1c12.7,0,23,10.3,23,23.1v646.4C843.9,937.1,799.3,981.6,744.6,981.6z"></path><path d="M700.2,182.7c-0.3,0-0.6,0-0.9,0H296.7c-8.4,0-16.2-4.6-20.2-12c-4-7.4-3.7-16.4,0.8-23.5l76.2-118.3c4.3-6.6,11.5-10.6,19.4-10.6h254.9c8.1,0,15.6,4.2,19.8,11.1l68.6,113.6c4.4,4.2,7.1,10.1,7.1,16.6C723.3,172.4,713,182.7,700.2,182.7z M339,136.7h319.6l-43.6-72.3H385.5L339,136.7z"></path><path d="M322.9,862.5c-12.7,0-23.1-10.3-23.1-23.1V286.7c0-12.7,10.4-23.1,23.1-23.1c12.7,0,23,10.3,23,23.1v552.7C346,852.2,335.7,862.5,322.9,862.5z"></path><path d="M500,862.5c-12.7,0-23-10.3-23-23.1V286.7c0-12.7,10.3-23.1,23-23.1s23.1,10.3,23.1,23.1v552.7C523.1,852.2,512.7,862.5,500,862.5z"></path><path d="M666,862.5c-12.7,0-23-10.3-23-23.1V286.7c0-12.7,10.3-23.1,23-23.1c12.7,0,23,10.3,23,23.1v552.7C689,852.2,678.7,862.5,666,862.5z"></path></g></svg>
+                    </div>
+                  <% }); %>
+                <% } %>
+
+              </output>
+            </div>
+          </div>
+
+          <br>
+          <div class="form__info--product">
+            <h2 class="text-dark">Thông tin sản phẩm</h2>
+            <div class="form-horizontal text-dark">
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="Product_Name">Tên sản phẩm:</label>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="Product_Name" minlength="0" maxlength="120" name="Product_Name" value="<%= products.Product_Name %>">
+                  <div class="text-right">0/120</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="Description">Mô tả sản phẩm:</label>
+                <div class="col-sm-6">
+                  <textarea type="text" class="form-control" id="Description" rows="7" minlength="0" maxlength="3000" placeholder="<%= products.Description %>" name="Description"><%= products.Description %></textarea>
+                  <div class="text-right">0/350</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="Product_Type">Danh mục:</label>
+                <div class="col-sm-6">
+                  <select class="form-control" id="Product_Type" name="Product_Type">
+                     <optgroup label="Danh mục">
+                       <% type.forEach(function(i) {%>
+                       <option value="<%=i._id%>" <%= (i._id == id) ? "selected" : "" %> ><%=i.Title%></option>
+                       <%});%>
+                     </optgroup>
+                   </select>
+                </div>
+              </div>
+              <br>
+
+              <h2 class="text-dark">Giá và số lượng</h2>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="Price">Giá
+            <a href="#" data-price="tooltip" data-placement="top" title="Vui lòng đăng sản phẩm với mức giá bạn sẵn lòng bán. Việc thiết lập mức giá có thể ảnh hưởng đến sản phẩm.">
+              <i class="fa fa-info-circle text-primary" aria-hidden="true"></i>
+            </a>:
+          </label>
+                <div class="col-sm-4">
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="Price" name="Price" value="<%= products.Price %>">
+                    <span class="input-group-addon"><b>VNĐ</b></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="Quantity">Số lượng:</label>
+                <div class="col-sm-6">
+                  <input type="number" class="form-control" id="Quantity" value="<%= products.Quantity %>" name="Quantity">
+                </div>
+              </div>
+              <br>
+
+              <h2 class="text-dark">Thông tin khác</h2>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="Brand">Hãng:</label>
+                <div class="col-sm-4">
+                  <input type="text"  class="form-control" id="Brand" value="<%= products.Brand %>" name="Brand">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="status">Trạng thái:</label>
+                <div class="col-sm-2">
+                  <select class="form-control" id="status" name="status">
+                    <optgroup label="Danh mục">
+                      <option value="Mới" selected>Mới</option>
+                      <option value="Cũ">Đã sử dụng</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+              <br><br>
+              <div class="form-group">
+                <div class="col-sm-offset-6 col-sm-10">
+                  <a href="/kenh-nguoi-ban"><input type="button" id="cancel" class="btn btn-default" value="Huỷ"></a>
+                  <button type="submit" id="save" class="btn btn-success">Lưu</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+    </div>
+    <hr>
+  </div>
+</div>
+<script type="text/javascript">
+
+  // window.onbeforeunload = function() {
+  //     return false;
+  // }
+
+  var nam = [];
+  var _arrImg = [];
+  <%var chuoi_Img = products.Img_Product.split(",");%>
+  <% if(chuoi_Img.length == 1) {%>
+    _arrImg.push('<%= chuoi_Img.toString() %>');
+  <%} else {%>
+    <% chuoi_Img.forEach(function(lalad){%>
+      _arrImg.push('<%= lalad.toString() %>');
+    <% }); %>
+  <% } %>
+  nam.push(_arrImg.length);
+  var uploadImages = () => {
+
+    var dop = document.querySelector('#dropE');
+    var preview = document.querySelector('#list');
+    var err = document.querySelector('#alert--err');
+    var files = document.querySelector('input[type=file]').files;
+
+
+    function readAndPreview(file) {
+      // Reg img
+      if (/\.(jpe?g|png|gif)$/i.test(file.name)) {
+        var reader = new FileReader();
+
+        reader.addEventListener("load", function() {
+          var image = document.createElement("div");
+          image.classList.add("img-relative");
+          image.title = file.name;
+          image.style.background = "url(" + this.result + ") center center / contain no-repeat";
+          createSvg(image);
+          _arrImg.push(file.name);
+          preview.appendChild(image);
+          err.style.display = 'none';
+        }, false);
+
+        reader.readAsDataURL(file);
+
+      } else {
+        let str_err = "không thể được tải lên.";
+        err.style.display = 'block';
+        let mes = err.firstElementChild.textContent;
+        err.firstElementChild.innerHTML = mes.replace(mes, file.name + '&nbsp;' + str_err);
+      }
+    }
+
+    if (files) {
+        nam.push(files.length);
+        let cong = nam.reduce(add, 0);
+         function add(a, b) {
+             return a + b;
+         }
+        if(cong < 7) {
+          removeSpan();
+          [].forEach.call(files, readAndPreview);
+        } else {
+          document.querySelector('#list').innerHTML = '';
+          nam.splice(0,nam.length);
+          cong = 0;
+          addSpan();
+          errorMaxlength();
+          return false;
+        }
+     }
+  }
+var yErr = document.querySelector('#alert--err');
+  var errorMaxlength = () => {
+    var str_err = "Quá số ảnh (6/6) được tải lên.";
+    yErr.style.display = 'block';
+    var mes = yErr.firstElementChild.textContent;
+    yErr.firstElementChild.innerHTML = mes.replace(mes, str_err);
+  }
+
+  let addSpan = () => {
+    document.getElementById("dropE").style.display = "flex";
+    document.getElementById("save").disabled = true;
+  };
+
+  let removeSpan = () => {
+    document.getElementById("dropE").style.display = "none";
+    document.getElementById("save").disabled = false;
+  };
+
+  function deleteSvgI(e){
+    let removeFiles = document.querySelector('input[type=file]').files;
+    let getVal = e.parentNode.getAttribute('title');
+    for (var i = 0; i < removeFiles.length; i++)
+    {
+     if(removeFiles[i].name === getVal) {
+       e.parentNode.remove(e);
+       var index_Img = _arrImg.indexOf(getVal);
+       if (index_Img > -1) {
+         _arrImg.splice(index_Img, 1);
+         nam.splice(0,nam.length);
+       }
+       nam.push(_arrImg.length);
+       if(nam == 0){
+         document.querySelector('input[type=file]').value = '';
+         addSpan();
+       }
+       return removeFiles;
+     }
+    }
+  }
+
+  function createSvg(cr7)
+  {
+      let container = cr7;
+      let deleteSvg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
+      deleteSvg.setAttributeNS(null,"class","deleteSvg");
+      deleteSvg.setAttributeNS(null,"onclick","deleteSvgI(this)");
+      deleteSvg.setAttributeNS(null,"viewBox","0 0 1000 1000");
+      deleteSvg.setAttributeNS(null,"enable-background","new 0 0 1000 1000");
+      deleteSvg.setAttributeNS(null,"width",'16px');
+      deleteSvg.setAttributeNS(null,"height","16px");
+      deleteSvg.setAttributeNS(null,"fill","#01a185");
+      deleteSvg.setAttributeNS(null,"cursor","pointer");
+      deleteSvg.setAttributeNS(null,"stroke","none");
+      container.appendChild(deleteSvg);
+      let gSVG = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      deleteSvg.appendChild(gSVG);
+
+      for(let io = 0; io <= 5; io++) {
+        let url = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        switch (io) {
+          case 0:
+              var path = url;
+              path.setAttributeNS(null, "d", "M967,182.7H33c-12.7,0-23-10.3-23-23c0-12.7,10.3-23,23-23H967c12.7,0,23,10.3,23,23C990,172.4,979.7,182.7,967,182.7z");
+              gSVG.appendChild(path);
+              break;
+          case 1:
+              var path1 = url;
+              path1.setAttributeNS(null, "d", "M744.6,981.6H249.1c-54.8,0-99.3-44.5-99.3-99.3V159.7c0-12.7,10.3-23,23-23c12.7,0,23,10.3,23,23v722.6c0,29.4,23.8,53.3,53.2,53.3h495.5c29.3,0,53.2-23.9,53.2-53.3V235.9c0-12.7,10.3-23.1,23-23.1c12.7,0,23,10.3,23,23.1v646.4C843.9,937.1,799.3,981.6,744.6,981.6z");
+              gSVG.appendChild(path1);
+              break;
+          case 2:
+              var path2 = url;
+              path2.setAttributeNS(null, "d", "M700.2,182.7c-0.3,0-0.6,0-0.9,0H296.7c-8.4,0-16.2-4.6-20.2-12c-4-7.4-3.7-16.4,0.8-23.5l76.2-118.3c4.3-6.6,11.5-10.6,19.4-10.6h254.9c8.1,0,15.6,4.2,19.8,11.1l68.6,113.6c4.4,4.2,7.1,10.1,7.1,16.6C723.3,172.4,713,182.7,700.2,182.7z M339,136.7h319.6l-43.6-72.3H385.5L339,136.7z");
+              gSVG.appendChild(path2);
+              break;
+          case 3:
+              var path3 = url;
+              path3.setAttributeNS(null, "d", "M322.9,862.5c-12.7,0-23.1-10.3-23.1-23.1V286.7c0-12.7,10.4-23.1,23.1-23.1c12.7,0,23,10.3,23,23.1v552.7C346,852.2,335.7,862.5,322.9,862.5z");
+              gSVG.appendChild(path3);
+              break;
+          case 4:
+              var path4 = url;
+              path4.setAttributeNS(null, "d", "M500,862.5c-12.7,0-23-10.3-23-23.1V286.7c0-12.7,10.3-23.1,23-23.1s23.1,10.3,23.1,23.1v552.7C523.1,852.2,512.7,862.5,500,862.5z");
+              gSVG.appendChild(path4);
+              break;
+          case 5:
+              var path5 = url;
+              path5.setAttributeNS(null, "d", "M666,862.5c-12.7,0-23-10.3-23-23.1V286.7c0-12.7,10.3-23.1,23-23.1c12.7,0,23,10.3,23,23.1v552.7C689,852.2,678.7,862.5,666,862.5z");
+              gSVG.appendChild(path5);
+              break;
+          }
+      }
+  }
+
+  $(document).ready(() => {
+    var control = $("#files");
+    $('[data-price="tooltip"]').tooltip();
+    $('.deleteSvg').click(function() {
+      $(this).closest('div.img-relative').remove();
+      var titleI = $(this).closest('div.img-relative').attr('title');
+      var indexImg = _arrImg.indexOf(titleI);
+      if (indexImg > -1) {
+        _arrImg.splice(indexImg, 1);
+        nam.splice(0,nam.length);
+      }
+      nam.push(_arrImg.length);
+      if(nam == 0){
+        control.replaceWith( control.val('').clone( true ) );
+        addSpan();
+      }
+    });
+  });
+</script>
+
+
+
+<%- include ../../partials/Footer %>
+
+  <!-- js -->
+<%- include ../../partials(css-js)/foot %>

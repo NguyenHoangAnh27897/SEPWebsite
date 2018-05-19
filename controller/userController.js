@@ -148,6 +148,74 @@ module.exports = (app) => {
     });
 	});
 	
+	app.get('/update-san-pham/:id', isLogin, isPay, function(req,res,next) {
+    Product.findById(req.params.id, function(err, docs) {
+        Product_Type.find(function(err, types) {
+            res.render('Page/Product/Edit', {
+                title: 'Chỉnh sửa sản phẩm',
+                chuto: 'Kênh người bán',
+                products: docs ,
+                id: docs.Product_Type,
+                type: types
+            });
+        });
+    });
+  });
+
+  app.post('/update-san-pham/:id', isLogin, isPay, function(req,res,next) {
+    upload(req, res, function(err) {
+        if (err) {
+            Product.findById(req.params.id, function(err, docs) {
+                Product_Type.find(function(err, types) {
+                    res.render('Page/Product/Edit', {
+                        title: 'Thêm sản phẩm',
+                        msg: "Lỗi: Không có ảnh!",
+                        chuto: 'Kênh người bán',
+                        products: docs ,
+                        id: req.params.id,
+                        type: types
+                    });
+                });
+            });
+        } else {
+            if (maxImg.length === 0) {
+                Product.findById(req.params.id, function(err, docs) {
+                    Product_Type.find(function(err, types) {
+                        res.render('Page/Product/Edit', {
+                            title: 'Thêm sản phẩm',
+                            msg: "Vui lòng thêm ảnh để hoàn thiện sản phẩm!",
+                            chuto: 'Kênh người bán',
+                            products: docs,
+                            id: req.params.id,
+                            type: types
+                        });
+                    });
+                });
+            }
+            else {
+                var editSanpham = {};
+                editSanpham.Product_Name = req.body.Product_Name;
+                editSanpham.Description = req.body.Description;
+                editSanpham.Price = req.body.Price;
+                editSanpham.Quantity = req.body.Quantity;
+                editSanpham.Brand = req.body.Brand;
+                editSanpham.Product_Type = req.body.Product_Type;
+                editSanpham.Img_Product = `${maxImg.toString()}`;
+                var sp_id = { _id: req.params.id };
+                Product.update(sp_id, editSanpham, function(err){
+                    if(err){
+                        return console.log(err);
+                    } else {
+                        maxImg.splice(0,maxImg.length);
+                        res.redirect('/kenh-nguoi-ban');
+                    }
+                });
+            }
+        }
+    });
+  });
+
+
 	app.get('/chi-tiet-san-pham/:id', function(req,res,next) {
     Product.findById(req.params.id, function(err, product) {
         try {
