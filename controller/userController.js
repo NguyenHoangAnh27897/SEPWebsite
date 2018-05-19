@@ -46,7 +46,7 @@ module.exports = (app) => {
   app.get('/dang-ky', function(req,res,next) {
   	var messages = req.flash('error');
   	res.render('Page/register', {
-  		title: 'Đăng ký tài khoản ',
+  		title: 'Đăng ký tài khoản',
   		messages: messages,
   		hasErrors: messages.length > 0 });
   });
