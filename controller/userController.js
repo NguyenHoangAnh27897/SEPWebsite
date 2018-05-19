@@ -75,7 +75,7 @@ module.exports = (app) => {
                 res.render('Page/kenh-nguoi-ban', {
                     title: 'Kênh người bán',
                     products: docs ,
-                    productsD: docsD ,
+                    productsD: docsD,
                     type: types
                 });
             });
@@ -193,7 +193,7 @@ module.exports = (app) => {
   });
 
   app.get('/danh-muc/:id', function(req,res,next) {
-  	if(!req.params.id) { throw new Error('Không có'); }
+  	if(!req.params.id) { throw new Error('Không có sản phẩm'); }
   	Product_Type.find(function(err, types) {
   		if (err) return next(err + "");
   			Product.find({ Enable: true },function(err, docs) {
@@ -212,7 +212,7 @@ module.exports = (app) => {
   				res.render('Page/danh-muc', {
   					title: 'Danh mục',
   					header: 'Chợ tốt Văn Lang',
-  					subHeader: 'Lựa chọn sản phẩm mà bạn muốn',
+  					subHeader: 'Chọn sản phẩm bạn muốn',
   					type: types,
   					type_id: req.params.id,
   					products: docs });
