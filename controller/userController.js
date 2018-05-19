@@ -45,11 +45,11 @@ module.exports = (app) => {
 	
 	app.get('/kenh-nguoi-ban', isLogin, isPay, function(req, res, next) {
     Product.find({$and: [{ Seller: req.user._id }, { Enable: true }] },function(err, docs) {
-        if (err) throw err
+        if (err) throw new Error(err);
         Product_Type.find(function(err, types) {
             if (err) throw err
             Product.find({$and: [{ Seller: req.user._id }, { Enable: false }] },function(err, docsD) {
-                if (err) throw err
+                if (err) throw new Error(err);
                 docs.map(function(imgEdit) {
                     let propImg = 'Img_Product',
                             position = imgEdit.Img_Product.indexOf(',');
@@ -193,7 +193,7 @@ module.exports = (app) => {
   });
 
   app.get('/danh-muc/:id', function(req,res,next) {
-  	if(!req.params.id) { console.log('Không có'); }
+  	if(!req.params.id) { throw new Error('Không có'); }
   	Product_Type.find(function(err, types) {
   		if (err) return next(err + "");
   			Product.find({ Enable: true },function(err, docs) {
