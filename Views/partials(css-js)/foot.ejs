@@ -1,0 +1,98 @@
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/bootstrap-select.js"></script>
+<script src="../js/form--upload.js"></script>
+<script src="../js/view-detail.js"></script>
+<script src="../js/hiddenporo.js"></script>
+<!-- <script src="../js/three.min.js"></script>
+<script src="../js/TweenMax.min.js"></script>
+<script src="../js/bas.js"></script>
+<script src="../js/OrbitControls-2.js"></script>
+<script src="../js/index.js"></script> -->
+<script>
+  $(document).ready(function () {
+    var mySelect = $('#first-disabled2');
+
+    $('#special').on('click', function () {
+      mySelect.find('option:selected').prop('disabled', true);
+      mySelect.selectpicker('refresh');
+    });
+
+    $('#special2').on('click', function () {
+      mySelect.find('option:disabled').prop('disabled', false);
+      mySelect.selectpicker('refresh');
+    });
+
+    $('#basic2').selectpicker({
+      liveSearch: true,
+      maxOptions: 1
+    });
+
+  (function($) {
+    $(function() {
+      var $body = $('body');
+      var $menu = $('#menu');
+      $menu.wrapInner('<div class="inner"></div>');
+      $menu._locked = false;
+      $menu._lock = function() {
+        if ($menu._locked) return false;
+        $menu._locked = true;
+        window.setTimeout(function() {
+          $menu._locked = false;
+        }, 350);
+        return true;
+      };
+      $menu._show = function() {
+        if ($menu._lock()) $body.addClass('is-menu-visible');
+      };
+      $menu._hide = function() {
+        if ($menu._lock()) $body.removeClass('is-menu-visible');
+      };
+      $menu._toggle = function() {
+        if ($menu._lock()) $body.toggleClass('is-menu-visible');
+      };
+      $menu.appendTo($body).on('click', function(event) {
+        event.stopPropagation();
+      }).on('click', 'a', function(event) {
+        var href = $(this).attr('href');
+        event.preventDefault();
+        event.stopPropagation();
+        $menu._hide();
+        if (href == '#menu') return;
+        window.setTimeout(function() {
+          window.location.href = href;
+        }, 350);
+      }).append('<a id="close--menu" class="close" href="#menu">Close</a>');
+      $body.on('click', 'a[href="#menu"]', function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        $menu._toggle();
+      }).on('click', function(event) {
+        $menu._hide();
+      }).on('keydown', function(event) {
+        if (event.keyCode == 27) $menu._hide();
+      });
+    });
+  })(jQuery);
+  });
+</script>
+<script type="text/javascript" src="../js/jquery.leanModal.min.js"></script>
+<!-- Source -->
+<script src="../js/jquery.uls.data.js"></script>
+<script src="../js/jquery.uls.data.utils.js"></script>
+<script src="../js/jquery.uls.lcd.js"></script>
+<script src="../js/jquery.uls.languagefilter.js"></script>
+<script src="../js/jquery.uls.regionfilter.js"></script>
+<script src="../js/jquery.uls.core.js"></script>
+<script>
+  $(document).ready( function() {
+    $( '.uls-trigger' ).uls( {
+      onSelect : function( language ) {
+        var languageName = $.uls.data.getAutonym( language );
+        $( '.uls-trigger' ).text( languageName );
+      },
+      quickList: ['en', 'hi', 'he', 'ml', 'ta', 'fr'] //FIXME
+    });
+  });
+</script>

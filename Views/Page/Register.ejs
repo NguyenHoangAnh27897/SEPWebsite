@@ -1,0 +1,76 @@
+<!-- meta css info  -->
+<%- include ../partials(css-js)/head %>
+
+<section>
+			<div id="page-wrapper" class="sign-in-wrapper">
+				<div class="graphs">
+					<div class="sign-up">
+						<h1><%= title %></h1>
+						<p class="creating">Having hands on experience in creating innovative designs,I do offer design
+							solutions which harness.</p>
+						<h2>Personal Information</h2>
+						<% if(hasErrors) { %>
+							<% messages.forEach((err) => {%>
+								<div class="alert alert-danger"><%= err %></div>
+							<% }); %>
+						<% } %>
+						<form action="/dang-ky" method="post">
+						<div class="sign-u">
+							<div class="sign-up1">
+								<h4>Name* :</h4>
+							</div>
+							<div class="sign-up2">
+								<input type="text" name="username" placeholder="Họ tên" />
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="sign-u">
+							<div class="sign-up1">
+								<h4>Email Address* :</h4>
+							</div>
+							<div class="sign-up2">
+								<input type="text" name="email" placeholder="Email" />
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="sign-u">
+							<div class="sign-up1">
+								<h4>Password* :</h4>
+							</div>
+							<div class="sign-up2">
+								<input type="password" name="password" placeholder="Mật khẩu" />
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+						<div class="sign-u">
+							<div class="sign-up1">
+								<h4>Confirm Password* :</h4>
+							</div>
+							<div class="sign-up2">
+									<input type="password" name="confirmPassword" placeholder="Nhập lại mật khẩu" />
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+
+						<div class="sub_home">
+							<div class="sub_home_left">
+									<input type="submit" value="Tạo">
+							</div>
+							<div class="sub_home_right">
+								<p>Go Back to <a href="/">Home</a></p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					</form>
+					</div>
+				</div>
+			</div>
+		<!--footer section start-->
+			<footer class="diff">
+			   <p class="text-center">© 2018 Chợ tốt Văn Lang. All Rights Reserved | Design by  <a href="mailto:w.a.f-group@gmail.com"> W.A.F Group</a></p>
+			</footer>
+        <!--footer section end-->
+	</section>
+
+	<!-- js -->
+	<%- include ../partials(css-js)/foot %>
