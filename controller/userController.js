@@ -41,6 +41,111 @@ module.exports = (app) => {
   app.get('/dang-xuat', isLogin, function(req,res,next) {
   	req.logout();
   	res.redirect('/');
+	});
+	
+	app.get('/kenh-nguoi-ban', isLogin, isPay, function(req, res, next) {
+    Product.find({$and: [{ Seller: req.user._id }, { Enable: true }] },function(err, docs) {
+        if (err) throw err
+        Product_Type.find(function(err, types) {
+            if (err) throw err
+            Product.find({$and: [{ Seller: req.user._id }, { Enable: false }] },function(err, docsD) {
+                if (err) throw err
+                docs.map(function(imgEdit) {
+                    let propImg = 'Img_Product',
+                            position = imgEdit.Img_Product.indexOf(',');
+                    if(imgEdit.Img_Product.length !== position) {
+                        imgEdit[propImg] = imgEdit.Img_Product.split(",", 1);
+                    }
+                    else {
+                        imgEdit[propImg] = imgEdit.Img_Product;
+                    }
+                    return imgEdit;
+                });
+                docsD.map(function(imgEdit) {
+                    let propImg = 'Img_Product',
+                            position = imgEdit.Img_Product.indexOf(',');
+                    if(imgEdit.Img_Product.length !== position) {
+                        imgEdit[propImg] = imgEdit.Img_Product.split(",", 1);
+                    }
+                    else {
+                        imgEdit[propImg] = imgEdit.Img_Product;
+                    }
+                    return imgEdit;
+                });
+                res.render('Page/kenh-nguoi-ban', {
+                    title: 'Kênh người bán',
+                    products: docs ,
+                    productsD: docsD ,
+                    type: types
+                });
+            });
+        });
+    }).sort({Create_at: -1});
+  });
+
+
+	app.get('/them-san-pham', isLogin, isPay, function(req,res,next) {
+    Product.find(function(err, docs) {
+        Product_Type.find(function(err, types) {
+            res.render('Page/Product/Add', {
+                title: 'Thêm sản phẩm',
+                chuto: 'Kênh người bán',
+                products: docs ,
+                type: types
+            });
+        });
+    });
+  });
+
+  app.post("/them-san-pham", isLogin, isPay, function(req, res) {
+    upload(req, res, function(err) {
+      if (err) {
+            Product.find(function(err, docs) {
+                Product_Type.find(function(err, types) {
+                    res.render('Page/Product/Add', {
+                        title: 'Thêm sản phẩm',
+                        msg: "Lỗi: Không có ảnh!",
+                        chuto: 'Kênh người bán',
+                        products: docs,
+                        type: types
+                    });
+                });
+            });
+      } else {
+        if (maxImg.length === 0) {
+                Product.find(function(err, docs) {
+                    Product_Type.find(function(err, types) {
+                        res.render('Page/Product/Add', {
+                            title: 'Thêm sản phẩm',
+                            msg: "Vui lòng thêm ảnh để hoàn thiện sản phẩm!",
+                            chuto: 'Kênh người bán',
+                            products: docs,
+                            type: types
+                        });
+                    });
+                });
+        }
+        else {
+                var sanpham = new Product();
+                sanpham.Product_Name = req.body.Product_Name;
+                sanpham.Description = req.body.Description;
+                sanpham.Seller = req.user._id;
+                sanpham.Price = req.body.Price;
+                sanpham.Quantity = req.body.Quantity;
+                sanpham.Brand = (req.body.Brand) ? (req.body.Brand) : "No Brand";
+                sanpham.Product_Type = req.body.Product_Type;
+                sanpham.Img_Product = `${maxImg.toString()}`;
+                sanpham.save(function(err) {
+                    if(err) {
+                        return console.log(err);
+                    } else {
+                        maxImg.splice(0,maxImg.length);
+                        res.redirect('/');
+                    }
+                });
+        }
+      }
+    });
   });
 
   app.get('/dang-ky', function(req,res,next) {
