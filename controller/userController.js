@@ -146,7 +146,36 @@ module.exports = (app) => {
         }
       }
     });
+	});
+	
+	app.get('/chi-tiet-san-pham/:id', function(req,res,next) {
+    Product.findById(req.params.id, function(err, product) {
+        try {
+            Account.findById(product.Seller ,function(err, nguoidung){
+                if(err) { throw new Error('Lỗi Seller'); }
+                else {
+                    Product.find({$and: [{ Seller: nguoidung._id}, { Enable: true }]}, function(err, PoS){
+                        if(err) { throw new Error('Lỗi Seller_id'); }
+                        Product_Type.findOne(function(err,types){
+                            let all_Img = product.Img_Product.split(",");
+                            res.render('Page/chi-tiet-san-pham', {
+                                title: 'Chi tiết sản phẩm',
+                                product: product,
+                                seller: nguoidung,
+                                pos: PoS,
+                                all_Img: all_Img,
+                                one_typeid: types._id
+                            });
+                        });
+                    });
+                }
+            });
+        } catch (e) {
+             e.message;
+        }
+    });
   });
+
 
   app.get('/dang-ky', function(req,res,next) {
   	var messages = req.flash('error');
