@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Account = require('./Account');
 var Schema = mongoose.Schema;
 
+
 var ProductSchema = new mongoose.Schema({
     Seller: {
         type: String,
@@ -41,6 +42,10 @@ var ProductSchema = new mongoose.Schema({
       type: String,
       default: 'main.png'
     },
+    Url_clound: {
+      type: String,
+      required: true
+    },
     Enable: {
       type: Boolean,
       default: true
@@ -58,16 +63,16 @@ var ProductSchema = new mongoose.Schema({
     },
     update_at: {
         type: Date,
-        default: Date.now
     }
 });
 
-ProductSchema.path('Product_Name').set((Product_Name) => {
-  return Product_Name[0].toUpperCase() + Product_Name.slice(1);
-});
+// ProductSchema.path('Product_Name').set((Product_Name) => {
+//   return Product_Name[0].toUpperCase() + Product_Name.slice(1);
+// });
 
 ProductSchema.path('Brand').set((Brand) => {
   return Brand[0].toUpperCase() + Brand.slice(1);
 });
+
 
 module.exports = mongoose.model("product", ProductSchema);

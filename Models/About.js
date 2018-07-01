@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+
 var AboutSchema = new mongoose.Schema({
     Title: {
         type: String,
@@ -13,6 +14,10 @@ var AboutSchema = new mongoose.Schema({
         required: true
     },
     Img_Company: {
+      type: String,
+      required: true
+    },
+    Img_Member: {
       type: String,
       required: true
     },

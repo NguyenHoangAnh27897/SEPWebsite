@@ -1,98 +1,14 @@
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- js -->
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<!-- js -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/bootstrap-select.js"></script>
-<script src="../js/form--upload.js"></script>
-<script src="../js/view-detail.js"></script>
-<script src="../js/hiddenporo.js"></script>
-<!-- <script src="../js/three.min.js"></script>
-<script src="../js/TweenMax.min.js"></script>
-<script src="../js/bas.js"></script>
-<script src="../js/OrbitControls-2.js"></script>
-<script src="../js/index.js"></script> -->
+<script src="http://chototvanlang.tk/socket.io/socket.io.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-select.js"></script>
+<script src="/js/hiddenporo.js"></script>
 <script>
-  $(document).ready(function () {
-    var mySelect = $('#first-disabled2');
-
-    $('#special').on('click', function () {
-      mySelect.find('option:selected').prop('disabled', true);
-      mySelect.selectpicker('refresh');
-    });
-
-    $('#special2').on('click', function () {
-      mySelect.find('option:disabled').prop('disabled', false);
-      mySelect.selectpicker('refresh');
-    });
-
-    $('#basic2').selectpicker({
-      liveSearch: true,
-      maxOptions: 1
-    });
-
-  (function($) {
-    $(function() {
-      var $body = $('body');
-      var $menu = $('#menu');
-      $menu.wrapInner('<div class="inner"></div>');
-      $menu._locked = false;
-      $menu._lock = function() {
-        if ($menu._locked) return false;
-        $menu._locked = true;
-        window.setTimeout(function() {
-          $menu._locked = false;
-        }, 350);
-        return true;
-      };
-      $menu._show = function() {
-        if ($menu._lock()) $body.addClass('is-menu-visible');
-      };
-      $menu._hide = function() {
-        if ($menu._lock()) $body.removeClass('is-menu-visible');
-      };
-      $menu._toggle = function() {
-        if ($menu._lock()) $body.toggleClass('is-menu-visible');
-      };
-      $menu.appendTo($body).on('click', function(event) {
-        event.stopPropagation();
-      }).on('click', 'a', function(event) {
-        var href = $(this).attr('href');
-        event.preventDefault();
-        event.stopPropagation();
-        $menu._hide();
-        if (href == '#menu') return;
-        window.setTimeout(function() {
-          window.location.href = href;
-        }, 350);
-      }).append('<a id="close--menu" class="close" href="#menu">Close</a>');
-      $body.on('click', 'a[href="#menu"]', function(event) {
-        event.stopPropagation();
-        event.preventDefault();
-        $menu._toggle();
-      }).on('click', function(event) {
-        $menu._hide();
-      }).on('keydown', function(event) {
-        if (event.keyCode == 27) $menu._hide();
-      });
-    });
-  })(jQuery);
-  });
+  $(document).ready(function(){$("div.lazy-product, img.lazy-logo, img.lazy-cate, div.lazy-sale, div.lazy-ngung, img.lazy-member, div.lazy-details, div.lazy-lq").lazyload({effect:"fadeIn"});var a=$("#first-disabled2");$("#special").on("click",function(){a.find("option:selected").prop("disabled",!0),a.selectpicker("refresh")}),$("#special2").on("click",function(){a.find("option:disabled").prop("disabled",!1),a.selectpicker("refresh")}),$("#basic2").selectpicker({liveSearch:!0,maxOptions:1}),function(b){b(function(){var c=b("body"),d=b("#menu");d.wrapInner("<div class=\"inner\"></div>"),d._locked=!1,d._lock=function(){return!d._locked&&(d._locked=!0,window.setTimeout(function(){d._locked=!1},350),!0)},d._show=function(){d._lock()&&c.addClass("is-menu-visible")},d._hide=function(){d._lock()&&c.removeClass("is-menu-visible")},d._toggle=function(){d._lock()&&c.toggleClass("is-menu-visible")},d.appendTo(c).on("click",function(e){e.stopPropagation()}).on("click","a",function(e){var f=b(this).attr("href");e.preventDefault(),e.stopPropagation(),d._hide();"#menu"==f||window.setTimeout(function(){window.location.href=f},350)}).append("<a id=\"close--menu\" class=\"close\" href=\"#menu\">Close</a>"),c.on("click","a[href=\"#menu\"]",function(e){e.stopPropagation(),e.preventDefault(),d._toggle()}).on("click",function(){d._hide()}).on("keydown",function(e){27==e.keyCode&&d._hide()})})}(jQuery)});
+function GoogleMaps(){var a={lat:10.762936,lng:106.693335},b=new google.maps.Map(document.getElementById('map'),{zoom:15,center:a}),c=new google.maps.Marker({position:a,map:b})}
 </script>
-<script type="text/javascript" src="../js/jquery.leanModal.min.js"></script>
-<!-- Source -->
-<script src="../js/jquery.uls.data.js"></script>
-<script src="../js/jquery.uls.data.utils.js"></script>
-<script src="../js/jquery.uls.lcd.js"></script>
-<script src="../js/jquery.uls.languagefilter.js"></script>
-<script src="../js/jquery.uls.regionfilter.js"></script>
-<script src="../js/jquery.uls.core.js"></script>
-<script>
-  $(document).ready( function() {
-    $( '.uls-trigger' ).uls( {
-      onSelect : function( language ) {
-        var languageName = $.uls.data.getAutonym( language );
-        $( '.uls-trigger' ).text( languageName );
-      },
-      quickList: ['en', 'hi', 'he', 'ml', 'ta', 'fr'] //FIXME
-    });
-  });
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtTijdOrawSLXkwdTOT1MKXE7Y0-pVcFI&callback=GoogleMaps"></script>

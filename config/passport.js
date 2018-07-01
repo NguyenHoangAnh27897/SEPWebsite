@@ -20,11 +20,11 @@ passport.use('dang-ky', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 }, function(req, email, password, done) {
-  req.checkBody('username','Họ tên không được trống (Tối thiểu 1 ký tự, tối đa 35 ký tự).').notEmpty().isLength({ min: 1, max: 35 }).trim();
-  // req.checkBody('username','Họ tên không được có ký tự đặc biệt').notEmpty().trim().matches(/^([A-Za-z0-9]+)$/, "i");
+  req.checkBody('username','Họ tên không được trống (Tối thiểu 1 ký tự, tối đa 35 ký tự).').trim().notEmpty().isLength({ min: 1, max: 35 }).matches(/([A-Za-z0-9]{1,35})/, "i");
+  req.checkBody('phone','Họ tên không được có ký tự đặc biệt').notEmpty().trim().isLength({min: 9}).matches(/([0-9]{9,16})/, "i");
   req.checkBody('email','Email không đúng').notEmpty().isEmail().trim();
-  req.checkBody('password','Password phải từ 6 ký tự trở lên.(Tối đa: 25 ký tự).').notEmpty().isLength({min: 6, max: 25});
-  req.checkBody('password','Password không khớp').notEmpty().isLength({min: 6, max: 25}).equals(req.body.confirmPassword);
+  req.checkBody('password','Password phải từ 6 ký tự trở lên.(Tối đa: 25 ký tự).').notEmpty().isLength({min: 6, max: 35});
+  req.checkBody('password','Password không khớp').notEmpty().isLength({min: 6, max: 35}).equals(req.body.confirmPassword);
   var errors = req.validationErrors();
   if(errors) {
     var messages = [];
@@ -38,6 +38,7 @@ passport.use('dang-ky', new LocalStrategy({
       if (account) { return done(null, false, {message: 'Rất tiếc. Tài khoản đã có người đăng ký'}); }
       var newAccount = new Account();
       newAccount.User.Username = req.body.username;
+      newAccount.User.Phone = req.body.phone;
       newAccount.email = email;
       newAccount.password = newAccount.encryptPassword(password);
       newAccount.save(function(err, result) {
@@ -56,7 +57,7 @@ passport.use('dang-nhap', new LocalStrategy({
   passReqToCallback: true
 }, (req, email, password, done) => {
   req.checkBody('email','Email không đúng').notEmpty().isEmail();
-  req.checkBody('password','Password Lỗi').notEmpty();
+  req.checkBody('password','Password Lỗi').notEmpty().isLength({min: 6, max: 35});
   var errors = req.validationErrors();
   if(errors) {
     var messages = [];

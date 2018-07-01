@@ -1,9 +1,9 @@
 'use strict';
 
 var mongoose = require('mongoose');
-// mongoose.connect('mongodb://superMarketVLU:asdasd@ds157833.mlab.com:57833/testchotot')
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
+
 
 var AccountSchema = new mongoose.Schema({
     Admin: {
@@ -43,7 +43,7 @@ var AccountSchema = new mongoose.Schema({
         },
         Avatar_Img: {
           type: String,
-          default: 'main.png'
+          default: 'img.jpg'
         },
         Status: {
             type: Boolean,
@@ -87,7 +87,7 @@ AccountSchema.methods.validPassword = function(password) {
     if(this.password != null) {
       return bcrypt.compareSync(password, this.password);
     } else {
-        return false;
+      return false;
     }
 };
 

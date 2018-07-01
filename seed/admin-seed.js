@@ -25,5 +25,5 @@ for (var i = 0; i < Admin.length; i++) {
 }
 
 function exit() {
-    mongoose.disconnect();    
+    mongoose.disconnect();
 }

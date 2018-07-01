@@ -1,8 +1,6 @@
-var User = require('../Models/User');
+var User = require('../Models/Chat');
 
 var mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/chotot');
 
 var User = [
     new User({
@@ -55,5 +53,5 @@ for (var i = 0; i < User.length; i++) {
 }
 
 function exit() {
-    mongoose.disconnect();    
+    mongoose.disconnect();
 }
